@@ -1,0 +1,19 @@
+<mat-sidenav-container>
+  <mat-sidenav #drawer fixedInViewport="true" [mode]="(isHandset$ | async) ? 'over': 'side'"
+               [opened]="!(isHandset$ |async)">
+    <mat-toolbar>Autores</mat-toolbar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="margin-24-dp">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <h1>Publicaciones</h1>
+        <button mat-button color="primary" (click)="openUserDialog()">
+          <mat-icon>add</mat-icon>
+          Agregar publicación
+        </button>
+      </div>
+
+      <app-publications-table [data]="publicationPage$ | async"></app-publications-table>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

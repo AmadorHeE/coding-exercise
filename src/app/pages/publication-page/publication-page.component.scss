@@ -1,0 +1,10 @@
+$sidenav_size: 265px;
+
+/** Sidenav configuration init **/
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: $sidenav_size;
+}

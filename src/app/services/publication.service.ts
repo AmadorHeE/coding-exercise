@@ -19,54 +19,124 @@ export class PublicationService {
     const publicationPage: PublicationPage = {
       data: [
         {
-          title: 'da',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Emanuel',
+            lastName: 'Amador',
+            email: 'amador@example.com'
+          }
         },
         {
-          title: 'de',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Hugo',
+            lastName: 'Lopez',
+            email: 'lopez@example.com'
+          }
         },
         {
-          title: 'di',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Marlen',
+            lastName: 'Ramirez',
+            email: 'rz@example.com'
+          }
         },
         {
-          title: 'do',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Axel',
+            lastName: 'Alcaraz',
+            email: 'alcaraz@example.com'
+          }
         },
         {
-          title: 'du',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Eduardo',
+            lastName: 'Malfavon',
+            email: 'lalo@example.com'
+          }
         },
         {
-          title: 'da',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Wen :3',
+            lastName: 'Sosa',
+            email: 'miss_sosa@example.com'
+          }
         },
         {
-          title: 'de',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Emanuel',
+            lastName: 'Amador',
+            email: 'amador@example.com'
+          }
         },
         {
-          title: 'di',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Hugo',
+            lastName: 'Lopez',
+            email: 'lopez@example.com'
+          }
         },
         {
-          title: 'do',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Marlen',
+            lastName: 'Ramirez',
+            email: 'rz@example.com'
+          }
         },
         {
-          title: 'du',
+          title: 'Reactive programming in angular',
           date: new Date(),
-          description: 'something'
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Axel',
+            lastName: 'Alcaraz',
+            email: 'alcaraz@example.com'
+          }
+        },
+        {
+          title: 'Reactive programming in angular',
+          date: new Date(),
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Eduardo',
+            lastName: 'Malfavon',
+            email: 'lalo@example.com'
+          }
+        },
+        {
+          title: 'Reactive programming in angular',
+          date: new Date(),
+          description: 'This need a real, long and interesting description',
+          user: {
+            fistName: 'Wen :3',
+            lastName: 'Sosa',
+            email: 'miss_sosa@example.com'
+          }
         }
       ]
     };

@@ -1,16 +1,76 @@
-<mat-list>
-  <ng-container *ngFor="let publication of data.data">
-    <mat-card>
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Made in heaven</mat-card-title>
-        <mat-card-subtitle>madeinheaven@example.com</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>do</p>
-      </mat-card-content>
-      <mat-card-actions>do</mat-card-actions>
-    </mat-card>
-    <mat-divider></mat-divider>
-  </ng-container>
+<!--
+  <mat-form-field fxFlex appearance="outline">
+    <mat-label>Buscar</mat-label>
+    <input matInput [formControl]="searchField">
+    <span matPrefix><mat-icon>search</mat-icon></span>
+    <button mat-icon-button matSuffix>
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button mat-icon-button>
+    <mat-icon>delete</mat-icon>
+  </button>
+
+  <form>
+    <mat-form-field class="example-full-width"
+                    floatLabel="never" color="primary">
+      <input class="toolbar-search" type="text" matInput placeholder="search" [formControl]="searchField">
+      <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
+    </mat-form-field>
+  </form>
+
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <mat-form-field fxFlex appearance="outline" fxLayout="row" fxLayoutAlign="center center">
+    <input matInput placeholder="Buscar" [formControl]="searchField">
+    <button mat-icon-button matPrefix><mat-icon>search</mat-icon></button>
+    <button mat-icon-button matSuffix><mat-icon>clear</mat-icon></button>
+  </mat-form-field>
+  <button mat-icon-button><mat-icon>filter</mat-icon></button>
+</div>
+
+
+
+
+
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <mat-form-field fxFlex floatLabel="never" appearance="outline">
+    <input matInput placeholder="Search" autocomplete="off">
+    <button mat-icon-button matPrefix>
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button matSuffix>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+
+
+-->
+<mat-list fxLayout="column" fxLayoutGap="10px">
+  <mat-card *ngFor="let publication of data.data">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{publication.user.fistName}} {{publication.user.lastName}}</mat-card-title>
+      <mat-card-subtitle>{{publication.date | date: 'dd/mm/yyyy'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h1>{{publication.title}}</h1>
+      {{publication.description}}
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button>like</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" style="margin-top: 500px">
+    <button mat-mini-fab color="primary">1</button>
+    <button mat-icon-button>2</button>
+    <button mat-icon-button>3</button>
+    <button mat-icon-button>4</button>
+    <button mat-icon-button>...</button>
+    <button mat-icon-button>100</button>
+  </div>
 </mat-list>

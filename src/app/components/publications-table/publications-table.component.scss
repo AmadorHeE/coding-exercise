@@ -2,3 +2,33 @@
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }
+
+
+
+
+/* filter controls */
+.search-div {
+  margin: 100px;
+}
+
+.search-form-field {
+  border-radius: 5px;
+}
+
+div.mat-form-field-underline {
+  display: none;
+}
+
+div.mat-form-field-infix {
+  border-top: 0px;
+}
+
+.mat-form-field-wrapper {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.search-form-field div.mat-form-field-suffix button {
+  height: 32px;
+  width: 32px;
+}

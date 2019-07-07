@@ -1,4 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {FormControl} from '@angular/forms';
+
 import {PublicationPage} from '../../models/publication-page';
 
 @Component({
@@ -8,6 +10,8 @@ import {PublicationPage} from '../../models/publication-page';
 })
 export class PublicationsTableComponent implements OnInit, OnChanges {
   @Input() data: PublicationPage;
+
+  searchField = new FormControl();
 
   constructor() {
   }

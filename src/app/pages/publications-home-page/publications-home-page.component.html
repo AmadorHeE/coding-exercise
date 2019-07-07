@@ -1,10 +1,17 @@
-<app-publications-table [data]="publicationPage$ | async"></app-publications-table>
-
-<!--
 <mat-sidenav-container>
   <mat-sidenav #drawer fixedInViewport="true" [mode]="(isHandset$ | async) ? 'over': 'side'"
                [opened]="!(isHandset$ |async)">
     <mat-toolbar>Autores</mat-toolbar>
+    <mat-divider></mat-divider>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/">
+        <h1 matLine>Todos</h1>
+      </a>
+      <a mat-list-item [routerLink]="['/autor', user.id]" *ngFor="let user of (users$ | async)">
+        <h2 matLine>{{user.fistName}} {{user.lastName}}</h2>
+      </a>
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
@@ -19,18 +26,20 @@
       </button>
     </mat-toolbar>
     <div class="margin-24-dp">
-
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <h1>Publicaciones</h1>
-        <button mat-button color="primary" (click)="openUserDialog()">
-          <mat-icon>add</mat-icon>
-          Agregar publicación
-        </button>
-      </div>
-
-
-
+      <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+<!--
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h1>Publicaciones</h1>
+  <button mat-button color="primary" (click)="openUserDialog()">
+    <mat-icon>add</mat-icon>
+    Agregar publicación
+  </button>
+</div>
+
+<app-publications-table [data]="publicationPage$ | async"></app-publications-table>
 -->

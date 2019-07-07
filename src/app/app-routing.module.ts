@@ -1,11 +1,24 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+
+import {PublicationsHomePageComponent} from './pages/publications-home-page/publications-home-page.component';
 import {PublicationPageComponent} from './pages/publication-page/publication-page.component';
+import {AutorPageComponent} from './pages/autor-page/autor-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: PublicationPageComponent
+    component: PublicationsHomePageComponent,
+    children: [
+      {
+        path: '',
+        component: PublicationPageComponent
+      },
+      {
+        path: 'autor/:id',
+        component: AutorPageComponent
+      }
+    ]
   }
 ];
 
@@ -13,4 +26,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

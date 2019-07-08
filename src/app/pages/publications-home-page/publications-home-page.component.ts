@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {PublicationService} from '../../services/publication.service';
-import {User} from '../../models/user';
+import {Author} from '../../models/author';
 
 
 @Component({
@@ -14,13 +14,14 @@ import {User} from '../../models/user';
   styleUrls: ['./publications-home-page.component.scss']
 })
 export class PublicationsHomePageComponent implements OnInit {
-  users$: Observable<User[]>;
+  users$: Observable<Author[]>;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private publicationServ: PublicationService) {
+    console.log('PublicationsHomePageComponent');
   }
 
   ngOnInit() {

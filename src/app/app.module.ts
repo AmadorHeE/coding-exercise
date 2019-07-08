@@ -13,6 +13,8 @@ import {AutorPageComponent} from './pages/autor-page/autor-page.component';
 import {AppComponent} from './app.component';
 import {PublicationsTableComponent} from './components/publications-table/publications-table.component';
 import {UserPopupComponent} from './components/user-popup/user-popup.component';
+import {MatPaginatorIntl} from '@angular/material';
+import {MatPaginatorIntlCustom} from './shared/helpers/so';
 
 
 @NgModule({
@@ -31,7 +33,7 @@ import {UserPopupComponent} from './components/user-popup/user-popup.component';
     AppRoutingModule,
     SharedModule
   ],
-  providers: [],
+  providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCustom}],
   bootstrap: [AppComponent],
   entryComponents: [
     UserPopupComponent

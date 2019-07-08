@@ -6,7 +6,7 @@ import {switchMap} from 'rxjs/operators';
 
 import {PublicationService} from '../../services/publication.service';
 
-import {User} from '../../models/user';
+import {Author} from '../../models/author';
 import {PaginationParams} from '../../models/pagination-params';
 import {PublicationPage} from '../../models/publication-page';
 
@@ -19,15 +19,16 @@ import {PublicationPage} from '../../models/publication-page';
 export class AutorPageComponent implements OnInit, OnDestroy {
   private publicationsSubj = new BehaviorSubject<PublicationPage>(null);
 
-  author$: Observable<User>;
+  author$: Observable<Author>;
   publications$: Observable<PublicationPage> = this.publicationsSubj.asObservable();
 
   constructor(private route: ActivatedRoute, private publicationServ: PublicationService) {
+    console.log('AutorPageComponent');
   }
 
   ngOnInit() {
     this.author$ = this.route.paramMap.pipe(
-      switchMap(params => this.publicationServ.getAuthot(params.get('id')))
+      switchMap(params => this.publicationServ.getAuthor(params.get('id')))
     );
 
     this.route.paramMap.pipe(

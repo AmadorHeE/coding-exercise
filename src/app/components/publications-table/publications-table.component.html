@@ -1,12 +1,24 @@
 <mat-list fxLayout="column" fxLayoutGap="10px" *ngIf="data">
+  <div fxLayout="row" fxLayoutAlign="end">
+    <mat-form-field appearance="outline">
+      <mat-label>Ordenamiento por fecha</mat-label>
+      <!--<mat-select (selectionChange)="onChangeSelection($event)" required>-->
+      <mat-select value="desc" (selectionChange)="onChangeSelection($event)">
+        <mat-option value="desc">Descendente</mat-option>
+        <mat-option value="asc">Ascendente</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <mat-card *ngFor="let publication of data.data">
     <mat-card-header>
       <img mat-card-avatar src="{{publication.author.avatar}}">
       <mat-card-title>{{publication.author.firstName}} {{publication.author.lastName}}</mat-card-title>
       <mat-card-subtitle>{{publication.date | date: 'dd/MM/yyyy'}}</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content fxLayout="column">
       <h1>{{publication.title}}</h1>
+      <img src="{{publication.imageUrl}}" class="publication-image">
       {{publication.description}}
     </mat-card-content>
     <mat-card-actions align="end">

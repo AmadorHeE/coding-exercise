@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {PageEvent} from '@angular/material';
+import {MatSelectChange, PageEvent} from '@angular/material';
 
 import {PublicationPage} from '../../models/publication-page';
 import {PaginationParams} from '../../models/pagination-params';
@@ -12,6 +12,11 @@ import {PaginationParams} from '../../models/pagination-params';
 export class PublicationsTableComponent implements OnInit, OnChanges {
   @Input() data: PublicationPage;
   @Output() page: EventEmitter<PaginationParams> = new EventEmitter<PaginationParams>();
+
+  private offset;
+  private limit;
+  private sort = 'date';
+  private order = 'desc';
 
   constructor() {
   }
@@ -27,9 +32,24 @@ export class PublicationsTableComponent implements OnInit, OnChanges {
 
   onPageChange(pageEvent: PageEvent) {
     console.log(pageEvent);
-    const page = String(pageEvent.pageIndex + 1);
-    const limit = String(pageEvent.pageSize);
-    const paginationParams: PaginationParams = {page, limit, expand: 'author'};
+    this.offset = String(pageEvent.pageIndex + 1);
+    this.limit = String(pageEvent.pageSize);
+    this.emitValue();
+  }
+
+  onChangeSelection(matSelectChange: MatSelectChange) {
+    this.order = matSelectChange.value;
+    this.emitValue();
+  }
+
+  emitValue() {
+    const paginationParams: PaginationParams = {
+      page: this.offset,
+      limit: this.limit,
+      sort: this.sort,
+      order: this.order,
+      expand: 'author'
+    };
     this.page.emit(paginationParams);
   }
 }

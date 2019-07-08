@@ -1,7 +1,7 @@
 <mat-sidenav-container>
   <mat-sidenav #drawer fixedInViewport="true" [mode]="(isHandset$ | async) ? 'over': 'side'"
                [opened]="!(isHandset$ |async)">
-    <mat-toolbar>Autores</mat-toolbar>
+    <mat-toolbar class="main-toolbar">Autores</mat-toolbar>
     <mat-divider></mat-divider>
 
     <mat-nav-list>
@@ -14,7 +14,8 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center"
+                 class="main-toolbar mat-elevation-z2">
       <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="5px">
         <button mat-icon-button>
           <mat-icon>menu</mat-icon>

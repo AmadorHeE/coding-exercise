@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 
-import {User} from '../models/user';
+import {Author, deserializeAuthor} from '../models/author';
 import {deserializePublicationArray, Publication} from '../models/publication';
 import {DEFAULT_PUBL_PAGINATION_PARAMS, getHttpParamsForPublications, PaginationParams} from '../models/pagination-params';
 import {PublicationPage} from '../models/publication-page';
@@ -49,17 +49,17 @@ export class PublicationService {
     );
   }
 
-  getAuthors(): Observable<User[]> {
+  getAuthors(): Observable<Author[]> {
     const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
     return this.http.get(`/authors`, {headers}).pipe(
-      map(response => response as User[])
+      map(response => response as Author[])
     );
   }
 
-  getAuthot(authorId: string): Observable<User> {
+  getAuthor(authorId: string): Observable<Author> {
     const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
     return this.http.get(`/authors/${authorId}`, {headers}).pipe(
-      map(response => response as User)
+      map(response => deserializeAuthor(response))
     );
   }
 

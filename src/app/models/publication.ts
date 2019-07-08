@@ -1,23 +1,25 @@
-import {User} from './user';
+import {deserializeAuthor, Author} from './author';
 
 const TITLE = 'title';
 const DATE = 'date';
 const DESCRIPTION = 'description';
+const IMAGE_URL = 'imageUrl';
 const AUTHOR = 'author';
 
 export interface Publication {
   title: string;
   date: Date;
   description: string;
-  author?: User;
+  imageUrl: string;
+  author?: Author;
 }
 
 
 export function deserializePublication(obj: any): Publication {
-  const {[TITLE]: title, [DATE]: date, [DESCRIPTION]: description, [AUTHOR]: author} = obj;
-  const publication: Publication = {title, date: new Date(date), description};
+  const {[TITLE]: title, [DATE]: date, [DESCRIPTION]: description, [IMAGE_URL]: imageUrl, [AUTHOR]: author} = obj;
+  const publication: Publication = {title, date: new Date(date), description, imageUrl};
 
-  if (author) { publication.author = author; }
+  if (author) { publication.author = deserializeAuthor(author); }
 
   return publication;
 }

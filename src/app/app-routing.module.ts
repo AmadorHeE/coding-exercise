@@ -11,13 +11,13 @@ const routes: Routes = [
     component: PublicationsHomePageComponent,
     children: [
       {
+        path: 'autor/:id',
+        component: AutorPageComponent,
+      },
+      {
         path: '',
         component: PublicationPageComponent
       },
-      {
-        path: 'autor/:id',
-        component: AutorPageComponent
-      }
     ]
   }
 ];

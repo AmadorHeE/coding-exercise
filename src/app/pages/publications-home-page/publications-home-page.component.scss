@@ -8,3 +8,11 @@ mat-sidenav-container {
 mat-sidenav {
   width: $sidenav_size;
 }
+
+/********** Toolbar-Init **********/
+.main-toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}

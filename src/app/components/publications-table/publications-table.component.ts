@@ -1,7 +1,8 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {PageEvent} from '@angular/material';
 
 import {PublicationPage} from '../../models/publication-page';
+import {PaginationParams} from '../../models/pagination-params';
 
 @Component({
   selector: 'app-publications-table',
@@ -10,8 +11,7 @@ import {PublicationPage} from '../../models/publication-page';
 })
 export class PublicationsTableComponent implements OnInit, OnChanges {
   @Input() data: PublicationPage;
-
-  searchField = new FormControl();
+  @Output() page: EventEmitter<PaginationParams> = new EventEmitter<PaginationParams>();
 
   constructor() {
   }
@@ -20,9 +20,20 @@ export class PublicationsTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (changes.data) {
       this.data = changes.data.currentValue;
     }
   }
+
+  onPageChange(pageEvent: PageEvent) {
+    console.log(pageEvent);
+    const page = String(pageEvent.pageIndex + 1);
+    const limit = String(pageEvent.pageSize);
+    const paginationParams: PaginationParams = {page, limit, expand: 'author'};
+    this.page.emit(paginationParams);
+  }
 }
+
+/*
+searchField = new FormControl();
+ */

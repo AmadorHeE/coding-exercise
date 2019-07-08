@@ -24,7 +24,7 @@ export class PublicationsHomePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.users$ = this.publicationServ.getUsers();
+    this.users$ = this.publicationServ.getAuthors();
   }
 
 }

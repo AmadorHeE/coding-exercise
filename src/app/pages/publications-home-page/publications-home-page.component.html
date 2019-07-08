@@ -9,7 +9,7 @@
         <h1 matLine>Todos</h1>
       </a>
       <a mat-list-item [routerLink]="['/autor', user.id]" *ngFor="let user of (users$ | async)">
-        <h2 matLine>{{user.fistName}} {{user.lastName}}</h2>
+        <h2 matLine>{{user.firstName}} {{user.lastName}}</h2>
       </a>
     </mat-nav-list>
   </mat-sidenav>

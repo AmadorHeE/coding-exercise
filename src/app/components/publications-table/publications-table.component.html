@@ -1,3 +1,26 @@
+<mat-list fxLayout="column" fxLayoutGap="10px" *ngIf="data">
+  <mat-card *ngFor="let publication of data.data">
+    <mat-card-header>
+      <img mat-card-avatar src="{{publication.author.avatar}}">
+      <mat-card-title>{{publication.author.firstName}} {{publication.author.lastName}}</mat-card-title>
+      <mat-card-subtitle>{{publication.date | date: 'dd/MM/yyyy'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h1>{{publication.title}}</h1>
+      {{publication.description}}
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button>like</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card>
+    <mat-paginator [length]="data.total" [pageSize]="10" [pageSizeOptions]="[1, 2, 5, 10]" [pageIndex]="0"
+                   showFirstLastButtons (page)="onPageChange($event)"></mat-paginator>
+  </mat-card>
+
+</mat-list>
+
 <!--
   <mat-form-field fxFlex appearance="outline">
     <mat-label>Buscar</mat-label>
@@ -49,28 +72,3 @@
 
 
 -->
-<mat-list fxLayout="column" fxLayoutGap="10px">
-  <mat-card *ngFor="let publication of data.data">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{publication.user.fistName}} {{publication.user.lastName}}</mat-card-title>
-      <mat-card-subtitle>{{publication.date | date: 'dd/mm/yyyy'}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <h1>{{publication.title}}</h1>
-      {{publication.description}}
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button>like</button>
-    </mat-card-actions>
-  </mat-card>
-
-  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" style="margin-top: 500px">
-    <button mat-mini-fab color="primary">1</button>
-    <button mat-icon-button>2</button>
-    <button mat-icon-button>3</button>
-    <button mat-icon-button>4</button>
-    <button mat-icon-button>...</button>
-    <button mat-icon-button>100</button>
-  </div>
-</mat-list>

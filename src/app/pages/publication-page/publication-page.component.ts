@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
 import {UserPopupComponent} from '../../components/user-popup/user-popup.component';
 import {PublicationService} from '../../services/publication.service';
+
 import {PublicationPage} from '../../models/publication-page';
 
 @Component({
@@ -14,8 +15,9 @@ import {PublicationPage} from '../../models/publication-page';
   styleUrls: ['./publication-page.component.scss']
 })
 export class PublicationPageComponent implements OnInit, OnDestroy {
-  private publicationSubj = new BehaviorSubject<PublicationPage>(null);
-  publicationPage$ = this.publicationSubj.asObservable();
+  private publicationsSubj = new BehaviorSubject<PublicationPage>(null);
+
+  publications$ = this.publicationsSubj.asObservable();
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
@@ -30,11 +32,11 @@ export class PublicationPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.publicationServ.getPublication()
-      .subscribe((publicationPage: PublicationPage) => this.publicationSubj.next(publicationPage));
+      .subscribe((publicationPage: PublicationPage) => this.publicationsSubj.next(publicationPage));
   }
 
   ngOnDestroy(): void {
-    this.publicationSubj.complete();
+    this.publicationsSubj.complete();
   }
 
   openUserDialog() {

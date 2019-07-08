@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
+import {map, tap} from 'rxjs/operators';
 
-import {Publication} from '../models/publication';
-import {PaginationParams} from '../models/pagination-params';
-import {PublicationPage} from '../models/publication-page';
 import {User} from '../models/user';
+import {deserializePublicationArray, Publication} from '../models/publication';
+import {DEFAULT_PUBL_PAGINATION_PARAMS, getHttpParamsForPublications, PaginationParams} from '../models/pagination-params';
+import {PublicationPage} from '../models/publication-page';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,235 +18,219 @@ export class PublicationService {
   constructor(private http: HttpClient) {
   }
 
-  getPublication(params: PaginationParams = {}): Observable<PublicationPage> {
-    const publicationPage: PublicationPage = {
+  parse_link_header(header): number {
+    if (header.length === 0) {
+      return 0;
+    }
+
+    const lastUrl = header.split(',')[2].split(';')[0].replace(/<(.*)>/, '$1').trim();
+    const params = lastUrl.split('?')[1].split('&');
+    const lastPage = params[0].split('=')[1];
+    const pageSize = params[1].split('=')[1];
+    const total = lastPage * pageSize;
+
+    return total;
+  }
+
+  getPublication(paginationParams: PaginationParams = DEFAULT_PUBL_PAGINATION_PARAMS): Observable<PublicationPage> {
+    const httpParmas: HttpParams = getHttpParamsForPublications(paginationParams);
+    const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
+
+    return this.http.get(`/publications`, {
+      headers, params: httpParmas,
+      observe: 'response'
+    }).pipe(
+      map(response => {
+        const total = this.parse_link_header(response.headers.get('Link'));
+        const data = deserializePublicationArray(response.body);
+        const publicationPage: PublicationPage = {total, data};
+        return publicationPage;
+      })
+    );
+  }
+
+  getAuthors(): Observable<User[]> {
+    const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
+    return this.http.get(`/authors`, {headers}).pipe(
+      map(response => response as User[])
+    );
+  }
+
+  getAuthot(authorId: string): Observable<User> {
+    const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
+    return this.http.get(`/authors/${authorId}`, {headers}).pipe(
+      map(response => response as User)
+    );
+  }
+
+  getPublicationsByAuthor(
+    authorId: string,
+    paginationParams: PaginationParams = DEFAULT_PUBL_PAGINATION_PARAMS
+  ): Observable<PublicationPage> {
+    const httpParmas: HttpParams = getHttpParamsForPublications(paginationParams);
+    const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
+
+    return this.http.get(`/authors/${authorId}/publications`, {
+      params: httpParmas,
+      observe: 'response'
+    }).pipe(
+      map(response => {
+        const total = this.parse_link_header(response.headers.get('Link'));
+        const data = deserializePublicationArray(response.body);
+        const publicationPage: PublicationPage = {total, data};
+        return publicationPage;
+      })
+    );
+  }
+}
+
+/*
+const publicationPage: PublicationPage = {
       data: [
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Emanuel',
+            firstName: 'Emanuel',
             lastName: 'Amador',
-            email: 'amador@example.com'
+            email: 'amador@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Hugo',
+            firstName: 'Hugo',
             lastName: 'Lopez',
-            email: 'lopez@example.com'
+            email: 'lopez@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Marlen',
+            firstName: 'Marlen',
             lastName: 'Ramirez',
-            email: 'rz@example.com'
+            email: 'rz@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Axel',
+            firstName: 'Axel',
             lastName: 'Alcaraz',
-            email: 'alcaraz@example.com'
+            email: 'alcaraz@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Eduardo',
+            firstName: 'Eduardo',
             lastName: 'Malfavon',
-            email: 'lalo@example.com'
+            email: 'lalo@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Wen :3',
+            firstName: 'Wen :3',
             lastName: 'Sosa',
-            email: 'miss_sosa@example.com'
+            email: 'miss_sosa@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Emanuel',
+            firstName: 'Emanuel',
             lastName: 'Amador',
-            email: 'amador@example.com'
+            email: 'amador@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Hugo',
+            firstName: 'Hugo',
             lastName: 'Lopez',
-            email: 'lopez@example.com'
+            email: 'lopez@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Marlen',
+            firstName: 'Marlen',
             lastName: 'Ramirez',
-            email: 'rz@example.com'
+            email: 'rz@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Axel',
+            firstName: 'Axel',
             lastName: 'Alcaraz',
-            email: 'alcaraz@example.com'
+            email: 'alcaraz@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Eduardo',
+            firstName: 'Eduardo',
             lastName: 'Malfavon',
-            email: 'lalo@example.com'
+            email: 'lalo@example.com',
+            avatar: ''
           }
         },
         {
           title: 'Reactive programming in angular',
           date: new Date(),
           description: 'This need a real, long and interesting description',
-          user: {
+          author: {
             id: 1,
-            fistName: 'Wen :3',
+            firstName: 'Wen :3',
             lastName: 'Sosa',
-            email: 'miss_sosa@example.com'
+            email: 'miss_sosa@example.com',
+            avatar: ''
           }
         }
       ]
     };
-    // return this.http.get(`s`);
-    return of(publicationPage);
-  }
-
-  getUsers() {
-    const users: User[] = [
-      {
-        id: 1,
-        fistName: 'Emanuel',
-        lastName: 'Amador',
-        email: 'amador@example.com'
-      },
-      {
-        id: 2,
-        fistName: 'Marlen',
-        lastName: 'Ramirez',
-        email: 'rz@example.com'
-      },
-      {
-        id: 3,
-        fistName: 'Emanuel',
-        lastName: 'Amador',
-        email: 'amador@example.com'
-      },
-      {
-        id: 4,
-        fistName: 'Marlen',
-        lastName: 'Ramirez',
-        email: 'rz@example.com'
-      },
-      {
-        id: 5,
-        fistName: 'Emanuel',
-        lastName: 'Amador',
-        email: 'amador@example.com'
-      },
-      {
-        id: 6,
-        fistName: 'Marlen',
-        lastName: 'Ramirez',
-        email: 'rz@example.com'
-      },
-      {
-        id: 7,
-        fistName: 'Emanuel',
-        lastName: 'Amador',
-        email: 'amador@example.com'
-      },
-      {
-        id: 8,
-        fistName: 'Marlen',
-        lastName: 'Ramirez',
-        email: 'rz@example.com'
-      },
-      {
-        id: 9,
-        fistName: 'Emanuel',
-        lastName: 'Amador',
-        email: 'amador@example.com'
-      },
-      {
-        id: 10,
-        fistName: 'Marlen',
-        lastName: 'Ramirez',
-        email: 'rz@example.com'
-      },
-      {
-        id: 11,
-        fistName: 'Emanuel',
-        lastName: 'Amador',
-        email: 'amador@example.com'
-      },
-      {
-        id: 12,
-        fistName: 'Marlen',
-        lastName: 'Ramirez',
-        email: 'rz@example.com'
-      },
-      {
-        id: 13,
-        fistName: 'Emanuel',
-        lastName: 'Amador',
-        email: 'amador@example.com'
-      },
-      {
-        id: 14,
-        fistName: 'Marlen',
-        lastName: 'Ramirez',
-        email: 'rz@example.com'
-      }
-    ];
-
-    return of(users);
-  }
-}
+*/

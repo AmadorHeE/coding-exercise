@@ -4,7 +4,7 @@
   "description": "JSON server for publications and authors",
   "scripts": {
     "populate": "node ./tools/populate-generator.js",
-    "start": "npx json-server --watch db.json --static ./dist"
+    "start": "npx json-server --watch db.json --static ../dist"
   },
   "keywords": [
     "json",

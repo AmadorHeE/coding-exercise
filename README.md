@@ -19,6 +19,5 @@ por autor, lo anterior selecionando un author de la barra lateral.
 4. Generar version de producción de la aplicación angular `ng build --prod`
 5. Cambia el directorio `cd server`
 6. Instalar dependencias del servidor `npm i`
-7. En caso de querer cambiar el schema db.json ejecutar `npm populate`, este paso es opcional
-8. Ejecutar el servido `npm start`
-9. Navegar a la url `http://localhost:3000`
+7. Ejecutar el servido `npm start`
+8. Navegar a la url `http://localhost:3000`

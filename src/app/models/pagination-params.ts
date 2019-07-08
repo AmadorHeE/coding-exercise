@@ -10,6 +10,7 @@ export interface PaginationParams {
 
 export const DEFAULT_PUBL_PAGINATION_PARAMS: PaginationParams = {
   page: '1',
+  limit: '10',
   sort: 'date',
   order: 'desc',
   expand: 'author'

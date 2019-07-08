@@ -13,8 +13,8 @@ export class PublicationsTableComponent implements OnInit, OnChanges {
   @Input() data: PublicationPage;
   @Output() page: EventEmitter<PaginationParams> = new EventEmitter<PaginationParams>();
 
-  private offset;
-  private limit;
+  private offset = '1';
+  private limit = '10';
   private sort = 'date';
   private order = 'desc';
 
@@ -22,6 +22,7 @@ export class PublicationsTableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    console.log('do somehi');
   }
 
   ngOnChanges(changes: SimpleChanges): void {

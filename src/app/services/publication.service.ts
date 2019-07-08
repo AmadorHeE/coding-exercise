@@ -45,7 +45,8 @@ export class PublicationService {
         const data = deserializePublicationArray(response.body);
         const publicationPage: PublicationPage = {total, data};
         return publicationPage;
-      })
+      }),
+      tap(so => console.log(so))
     );
   }
 

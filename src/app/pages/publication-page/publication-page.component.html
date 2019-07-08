@@ -1,4 +1,4 @@
-<app-publications-table [data]="publications$ | async"></app-publications-table>
+<app-publications-table [data]="publications$ | async" (page)="onPageChange($event)"></app-publications-table>
 
 <!--
 <mat-sidenav-container>

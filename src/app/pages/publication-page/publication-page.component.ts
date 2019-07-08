@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {MatDialog} from '@angular/material';
-import {UserPopupComponent} from '../../components/user-popup/user-popup.component';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+
 import {PublicationService} from '../../services/publication.service';
 
 import {PublicationPage} from '../../models/publication-page';
+import {PaginationParams} from '../../models/pagination-params';
 
 @Component({
   selector: 'app-publication-page',
@@ -25,8 +25,7 @@ export class PublicationPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private publicationServ: PublicationService,
-    private dialog: MatDialog
+    private publicationServ: PublicationService
   ) {
   }
 
@@ -39,10 +38,8 @@ export class PublicationPageComponent implements OnInit, OnDestroy {
     this.publicationsSubj.complete();
   }
 
-  openUserDialog() {
-    const dialogRef = this.dialog.open(UserPopupComponent, {
-      hasBackdrop: false,
-      disableClose: true
-    });
+  onPageChange(paginationParams: PaginationParams) {
+    this.publicationServ.getPublication(paginationParams)
+      .subscribe((publicationPage: PublicationPage) => this.publicationsSubj.next(publicationPage));
   }
 }

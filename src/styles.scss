@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.active {
+  background-color: rgba(95, 16, 176, 0.44);
+}
+
+.margin-24-dp {
+  margin-top: 25px;
+  margin-left: 92px;
+  margin-right: 92px;
+  margin-bottom: 50px;
+}

@@ -1,0 +1,14 @@
+<!-- Author card init -->
+<div *ngIf="author$ | async as author" fxLayout="row" class="author-card">
+  <div fxFlex>
+    <h1>{{author.firstName}} {{author.lastName}}</h1>
+    <p class="email">{{author.email}}</p>
+    <h3>Profesión: <span class="email">{{author.profession}}</span></h3>
+  </div>
+  <div>
+    <img class="avatar" [src]="author.avatar">
+  </div>
+</div>
+<!-- Author card end -->
+
+<app-publications-table [data]="publications$ | async" (page)="onPageChange($event)"></app-publications-table>

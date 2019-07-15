@@ -4,8 +4,12 @@ const faker = require('faker');
 const fs = require('fs');
 const Joi = require('joi');
 
+// Load enviroments vars.
 dotenv.config();
 
+/**
+ * Mocks generator.
+ */
 const populate = () => {
   try {
     const {
@@ -47,6 +51,11 @@ const populate = () => {
   }
 };
 
+/**
+ * Validate loaded environment vars.
+ * @param env: string[] Environment vars.
+ * @returns {AuthorsNum, publicationsPerAuthorMin, publicationsPerAuthorMax}
+ */
 const validateEnvVars = (env) => {
   const validationSchema = Joi.object().keys({
     AuthorsNum: Joi
@@ -85,12 +94,16 @@ const validateEnvVars = (env) => {
   return value
 };
 
+/**
+ * Generate random author.
+ * @returns {{firstName, lastName, paragraph, jobTitle: string, id: string, avatar: string, email: string}}
+ */
 const generateAuthor = () => {
   // variables to generate email
   let randomNumber = faker.random.number({min: 89, max: 99});
   let emailDomain = `@${faker.internet.domainWord()}.com`;
 
-  // author publicationPage
+  // author publications Page
   let id = faker.random.uuid().substring(0, 5);
   let firstName = faker.name.firstName();
   let lastName = faker.name.lastName();
@@ -110,6 +123,11 @@ const generateAuthor = () => {
   };
 };
 
+/**
+ * Generate random publication.
+ * @param authorId: string  Author's id.
+ * @returns {{date: Date, imageUrl: string, description: string, id: string, authorId: string, title: string}}
+ */
 const generatePublication = (authorId) => {
   let id = faker.random.uuid().substring(0, 5);
   let title = faker.lorem.sentence();
@@ -128,6 +146,10 @@ const generatePublication = (authorId) => {
   };
 };
 
+/**
+ * Generate random image.
+ * @returns: string
+ */
 const generateRandomImage = () => {
   let randomNum = faker.random.number({min: 1, max: 12});
   let image;
@@ -174,4 +196,5 @@ const generateRandomImage = () => {
   return image
 };
 
+// Run populate.
 populate();

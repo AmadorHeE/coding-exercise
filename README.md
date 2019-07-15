@@ -1,23 +1,25 @@
-# Aplicación de publicaciones
+# Authors and publications.
 
-Esta aplicación fue creada con [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+This project was generated with: 
+1. [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
-Y con [NodeJS](https://nodejs.org/ja/blog/release/v10.15.3/) v10.15.3 LTS.
+2. [NodeJS](https://nodejs.org/ja/blog/release/v10.15.3/) v10.15.3 LTS.
 
-## Descripción
+## Description
 
-Esta aplicación muestra un lista de publicaciones en primera instancia, tambien permite filtrar las publicaciones
-por autor, lo anterior selecionando un author de la barra lateral.
+
+This application shows a list of authors and publications.
+The publications can be filtered by author and also can be ordered in ascending or descending way.
 
 ## Development server
 
-### Pasos para ejecutar la aplicación
+### Steps to execute the application
 
-1. Clona el repositorio de github [Repositorio](https://github.com/AmadorHeE/coding-exercise.git)
-2. Cambia el directorio `cd coding-exercise`
-3. Instalar dependencias de la applicación Angular `npm i`
-4. Generar version de producción de la aplicación angular `ng build --prod`
-5. Cambia el directorio `cd server`
-6. Instalar dependencias del servidor `npm i`
-7. Ejecutar el servido `npm start`
-8. Navegar a la url `http://localhost:3000`
+1. Clone the repository `git clone https://github.com/AmadorHeE/coding-exercise.git`
+2. Change directory `cd coding-exercise`
+3. Install angular dependencies `npm i`
+4. Build angular project `ng build --prod`
+5. Change directory `cd server`
+6. Install server dependencies `npm i`
+7. Run Server `npm start`
+8. Go to `http://localhost:3000`

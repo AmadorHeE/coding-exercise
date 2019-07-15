@@ -6,6 +6,9 @@ const AVATAR = 'avatar';
 const PROFESSION = 'jobTitle';
 const DESCRIPTION = 'paragraph';
 
+/**
+ * Interface that defines the author's model.
+ */
 export interface Author {
   id: number;
   firstName: string;
@@ -16,6 +19,10 @@ export interface Author {
   description: string;
 }
 
+/**
+ * Casts the object sent by the server to one with the author's interface.
+ * @param obj: Object sent by the server.
+ */
 export function deserializeAuthor(obj: any): Author {
   const {
     [ID]: id, [FIRST_NAME]: firstName, [LAST_NAME]: lastName, [EMAIL]: email,
@@ -23,8 +30,4 @@ export function deserializeAuthor(obj: any): Author {
   } = obj;
   const author: Author = {id, firstName, lastName, email, avatar, profession, description};
   return author;
-}
-
-export function deserializeAuthorArray(objs: any[]) {
-  return objs.map(obj => this.deserializePublication(obj));
 }

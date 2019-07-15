@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 
 import {Author, deserializeAuthor} from '../models/author';
-import {deserializePublicationArray, Publication} from '../models/publication';
+import {deserializePublicationArray} from '../models/publication';
 import {DEFAULT_PUBL_PAGINATION_PARAMS, getHttpParamsForPublications, PaginationParams} from '../models/pagination-params';
 import {PublicationPage} from '../models/publication-page';
 
@@ -18,25 +18,34 @@ export class PublicationService {
   constructor(private http: HttpClient) {
   }
 
-  parse_link_header(header): number {
-    if (header.length === 0) {
+  /**
+   * Parses the link header to calculate how many pages are available.
+   * @param linkHeaderContent: Link header content.
+   */
+  parse_link_header(linkHeaderContent: string): number {
+    if (linkHeaderContent.length === 0) {
       return 0;
     }
 
-    const lastUrl = header.split(',')[2].split(';')[0].replace(/<(.*)>/, '$1').trim();
+    const urls: string[] = linkHeaderContent.split(',');
+    const lastUrl = urls.find(url => url.split(';')[1].split('=')[1] === '"last"')
+      .split(';')[0].replace(/<(.*)>/, '$1').trim();
     const params = lastUrl.split('?')[1].split('&');
-    const lastPage = params[0].split('=')[1];
-    const pageSize = params[1].split('=')[1];
-    const total = lastPage * pageSize;
+    const lastPage = Number(params[0].split('=')[1]);
+    const pageSize = Number(params[1].split('=')[1]);
 
-    return total;
+    return lastPage * pageSize;
   }
 
+  /**
+   * Gets a publication page.
+   * @param paginationParams: Pagination parameters.
+   */
   getPublication(paginationParams: PaginationParams = DEFAULT_PUBL_PAGINATION_PARAMS): Observable<PublicationPage> {
     const httpParmas: HttpParams = getHttpParamsForPublications(paginationParams);
     const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
 
-    return this.http.get(`/publications`, {
+    return this.http.get(`/api/v1/publications`, {
       headers, params: httpParmas,
       observe: 'response'
     }).pipe(
@@ -50,28 +59,39 @@ export class PublicationService {
     );
   }
 
+  /**
+   * Gets a list with all the authors,
+   */
   getAuthors(): Observable<Author[]> {
     const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
-    return this.http.get(`/authors`, {headers}).pipe(
+    return this.http.get(`/api/v1/authors`, {headers}).pipe(
       map(response => response as Author[])
     );
   }
 
+  /**
+   * Gets a specific author
+   * @param authorId: authorId: Author's id.
+   */
   getAuthor(authorId: string): Observable<Author> {
     const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
-    return this.http.get(`/authors/${authorId}`, {headers}).pipe(
+    return this.http.get(`/api/v1/authors/${authorId}`, {headers}).pipe(
       map(response => deserializeAuthor(response))
     );
   }
 
+  /**
+   * Gets a publications page from a specific author.
+   * @param authorId: Author's id.
+   * @param paginationParams: Pagination parameters.
+   */
   getPublicationsByAuthor(
     authorId: string,
     paginationParams: PaginationParams = DEFAULT_PUBL_PAGINATION_PARAMS
   ): Observable<PublicationPage> {
     const httpParmas: HttpParams = getHttpParamsForPublications(paginationParams);
-    const headers: HttpHeaders = new HttpHeaders().append('cache-control', 'no-cache');
 
-    return this.http.get(`/authors/${authorId}/publications`, {
+    return this.http.get(`/api/v1/authors/${authorId}/publications`, {
       params: httpParmas,
       observe: 'response'
     }).pipe(
@@ -84,154 +104,3 @@ export class PublicationService {
     );
   }
 }
-
-/*
-const publicationPage: PublicationPage = {
-      data: [
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Emanuel',
-            lastName: 'Amador',
-            email: 'amador@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Hugo',
-            lastName: 'Lopez',
-            email: 'lopez@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Marlen',
-            lastName: 'Ramirez',
-            email: 'rz@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Axel',
-            lastName: 'Alcaraz',
-            email: 'alcaraz@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Eduardo',
-            lastName: 'Malfavon',
-            email: 'lalo@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Wen :3',
-            lastName: 'Sosa',
-            email: 'miss_sosa@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Emanuel',
-            lastName: 'Amador',
-            email: 'amador@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Hugo',
-            lastName: 'Lopez',
-            email: 'lopez@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Marlen',
-            lastName: 'Ramirez',
-            email: 'rz@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Axel',
-            lastName: 'Alcaraz',
-            email: 'alcaraz@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Eduardo',
-            lastName: 'Malfavon',
-            email: 'lalo@example.com',
-            avatar: ''
-          }
-        },
-        {
-          title: 'Reactive programming in angular',
-          date: new Date(),
-          description: 'This need a real, long and interesting description',
-          author: {
-            id: 1,
-            firstName: 'Wen :3',
-            lastName: 'Sosa',
-            email: 'miss_sosa@example.com',
-            avatar: ''
-          }
-        }
-      ]
-    };
-*/

@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
-import {BehaviorSubject, Observable} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
+import {SubSink} from 'subsink';
 
 import {PublicationService} from '../../services/publication.service';
 
@@ -16,30 +15,36 @@ import {PaginationParams} from '../../models/pagination-params';
 })
 export class PublicationPageComponent implements OnInit, OnDestroy {
   private publicationsSubj = new BehaviorSubject<PublicationPage>(null);
+  private subs = new SubSink();
 
   publications$ = this.publicationsSubj.asObservable();
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
 
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private publicationServ: PublicationService
-  ) {
+  constructor(private publicationServ: PublicationService) {
   }
 
+  /**
+   * Initializes the publication's page: Requests for the first publications page.
+   */
   ngOnInit(): void {
-    this.publicationServ.getPublication()
+    this.subs.sink = this.publicationServ.getPublication()
       .subscribe((publicationPage: PublicationPage) => this.publicationsSubj.next(publicationPage));
   }
 
+  /**
+   * Release memory
+   */
   ngOnDestroy(): void {
     this.publicationsSubj.complete();
+    this.subs.unsubscribe();
   }
 
+  /**
+   * Handles the events that are emitted by the publications table,
+   * each event requests for a new publication page.
+   * @param paginationParams: Pagination params.
+   */
   onPageChange(paginationParams: PaginationParams) {
-    this.publicationServ.getPublication(paginationParams)
+    this.subs.sink = this.publicationServ.getPublication(paginationParams)
       .subscribe((publicationPage: PublicationPage) => this.publicationsSubj.next(publicationPage));
   }
 }

@@ -13,7 +13,7 @@ import {AutorPageComponent} from './pages/autor-page/autor-page.component';
 import {AppComponent} from './app.component';
 import {PublicationsTableComponent} from './components/publications-table/publications-table.component';
 import {MatPaginatorIntl} from '@angular/material';
-import {MatPaginatorIntlCustom} from './shared/helpers/so';
+import {MatPaginatorIntlCustom} from './shared/helpers/personalize-material-paginator';
 
 
 @NgModule({

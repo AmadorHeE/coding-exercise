@@ -1,36 +1,4 @@
-<app-publications-table [data]="publications$ | async" (page)="onPageChange($event)"></app-publications-table>
-
-<!--
-<mat-sidenav-container>
-  <mat-sidenav #drawer fixedInViewport="true" [mode]="(isHandset$ | async) ? 'over': 'side'"
-               [opened]="!(isHandset$ |async)">
-    <mat-toolbar>Autores</mat-toolbar>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="5px">
-        <button mat-icon-button>
-          <mat-icon>menu</mat-icon>
-        </button>
-        <span>Publicaciones</span>
-      </div>
-      <button mat-icon-button>
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-toolbar>
-    <div class="margin-24-dp">
-
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <h1>Publicaciones</h1>
-        <button mat-button color="primary" (click)="openUserDialog()">
-          <mat-icon>add</mat-icon>
-          Agregar publicación
-        </button>
-      </div>
-
-
-
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
--->
+<!-- Publication table init -->
+<app-publications-table [publicationPage]="publications$ | async" (page)="onPageChange($event)">
+</app-publications-table>
+<!-- Publication table end -->

@@ -10,9 +10,12 @@ import {PaginationParams} from '../../models/pagination-params';
   styleUrls: ['./publications-table.component.scss']
 })
 export class PublicationsTableComponent implements OnInit, OnChanges {
-  @Input() data: PublicationPage;
+  @Input() publicationPage: PublicationPage;
   @Output() page: EventEmitter<PaginationParams> = new EventEmitter<PaginationParams>();
 
+  /**
+   * Paginator settings
+   */
   private offset = '1';
   private limit = '10';
   private sort = 'date';
@@ -22,27 +25,42 @@ export class PublicationsTableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('do somehi');
   }
 
+  /**
+   * Angular hook that handles every value the parent component sends to the this component.
+   * @param changes: Object with information the parent component sends.
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
-      this.data = changes.data.currentValue;
+      this.publicationPage = changes.data.currentValue;
     }
   }
 
+  /**
+   * Handles the event that is emitted when the user selects a different page size or navigates to another page,
+   * and emit an event to the parent component.
+   * @param pageEvent: Object with information about the change page event.
+   */
   onPageChange(pageEvent: PageEvent) {
-    console.log(pageEvent);
     this.offset = String(pageEvent.pageIndex + 1);
     this.limit = String(pageEvent.pageSize);
     this.emitValue();
   }
 
+  /**
+   * Handles the event that is emitted when the user selects a different order for publications,
+   * and emit an event to the parent component.
+   * @param matSelectChange: Object that is emitted when the select value has changed.
+   */
   onChangeSelection(matSelectChange: MatSelectChange) {
     this.order = matSelectChange.value;
     this.emitValue();
   }
 
+  /**
+   * Issues events to the parent component, each event requests for a specific publications page
+   */
   emitValue() {
     const paginationParams: PaginationParams = {
       page: this.offset,
@@ -54,7 +72,3 @@ export class PublicationsTableComponent implements OnInit, OnChanges {
     this.page.emit(paginationParams);
   }
 }
-
-/*
-searchField = new FormControl();
- */

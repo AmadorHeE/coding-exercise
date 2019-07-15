@@ -11,4 +11,7 @@
 </div>
 <!-- Author card end -->
 
-<app-publications-table [data]="publications$ | async" (page)="onPageChange($event)"></app-publications-table>
+<!-- Author's publication table init -->
+<app-publications-table [publicationPage]="publications$ | async" (page)="onPageChange($event)">
+</app-publications-table>
+<!-- Author's publication table end -->

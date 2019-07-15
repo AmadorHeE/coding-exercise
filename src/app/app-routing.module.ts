@@ -5,6 +5,9 @@ import {PublicationsHomePageComponent} from './pages/publications-home-page/publ
 import {PublicationPageComponent} from './pages/publication-page/publication-page.component';
 import {AutorPageComponent} from './pages/autor-page/autor-page.component';
 
+/**
+ * Route settings.
+ */
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +22,11 @@ const routes: Routes = [
         component: PublicationPageComponent
       },
     ]
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 

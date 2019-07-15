@@ -15,15 +15,17 @@ import {Author} from '../../models/author';
 })
 export class PublicationsHomePageComponent implements OnInit {
   users$: Observable<Author[]>;
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small])
     .pipe(
       map(result => result.matches)
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private publicationServ: PublicationService) {
-    console.log('PublicationsHomePageComponent');
   }
 
+  /**
+   * Initializes the publication's home page: Retrieves all users available.
+   */
   ngOnInit() {
     this.users$ = this.publicationServ.getAuthors();
   }

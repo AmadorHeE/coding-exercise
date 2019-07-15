@@ -1,19 +1,23 @@
-<mat-list fxLayout="column" fxLayoutGap="10px" *ngIf="data">
+<mat-list fxLayout="column" fxLayoutGap="10px" *ngIf="publicationPage">
+  <!-- Options bar init -->
   <div fxLayout="row" fxLayoutAlign="end">
     <mat-form-field appearance="outline">
       <mat-label>Ordenamiento por fecha</mat-label>
-      <!--<mat-select (selectionChange)="onChangeSelection($event)" required>-->
       <mat-select value="desc" (selectionChange)="onChangeSelection($event)">
         <mat-option value="desc">Descendente</mat-option>
         <mat-option value="asc">Ascendente</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
+  <!-- Options bar end -->
 
-  <mat-card *ngFor="let publication of data.data">
+  <!-- publications init -->
+  <mat-card *ngFor="let publication of publicationPage.data">
     <mat-card-header>
       <img mat-card-avatar src="{{publication.author.avatar}}">
-      <mat-card-title>{{publication.author.firstName}} {{publication.author.lastName}}</mat-card-title>
+      <mat-card-title>
+        {{publication.author.firstName}} {{publication.author.lastName}}
+      </mat-card-title>
       <mat-card-subtitle>{{publication.date | date: 'dd/MM/yyyy'}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content fxLayout="column">
@@ -22,62 +26,13 @@
       {{publication.description}}
     </mat-card-content>
   </mat-card>
+  <!-- publications end -->
 
+  <!-- Paginator init -->
   <mat-card>
-    <mat-paginator [length]="data.total" [pageSize]="10" [pageSizeOptions]="[1, 2, 5, 10]" [pageIndex]="0"
-                   showFirstLastButtons (page)="onPageChange($event)"></mat-paginator>
+    <mat-paginator [length]="publicationPage.total" [pageSize]="10" [pageSizeOptions]="[1, 2, 5, 10]"
+                   [pageIndex]="0" showFirstLastButtons (page)="onPageChange($event)"></mat-paginator>
   </mat-card>
+  <!-- Paginator end -->
 
 </mat-list>
-
-<!--
-  <mat-form-field fxFlex appearance="outline">
-    <mat-label>Buscar</mat-label>
-    <input matInput [formControl]="searchField">
-    <span matPrefix><mat-icon>search</mat-icon></span>
-    <button mat-icon-button matSuffix>
-      <mat-icon>clear</mat-icon>
-    </button>
-  </mat-form-field>
-
-  <button mat-icon-button>
-    <mat-icon>delete</mat-icon>
-  </button>
-
-  <form>
-    <mat-form-field class="example-full-width"
-                    floatLabel="never" color="primary">
-      <input class="toolbar-search" type="text" matInput placeholder="search" [formControl]="searchField">
-      <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
-    </mat-form-field>
-  </form>
-
-
-<div fxLayout="row" fxLayoutAlign="center center">
-  <mat-form-field fxFlex appearance="outline" fxLayout="row" fxLayoutAlign="center center">
-    <input matInput placeholder="Buscar" [formControl]="searchField">
-    <button mat-icon-button matPrefix><mat-icon>search</mat-icon></button>
-    <button mat-icon-button matSuffix><mat-icon>clear</mat-icon></button>
-  </mat-form-field>
-  <button mat-icon-button><mat-icon>filter</mat-icon></button>
-</div>
-
-
-
-
-
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <mat-form-field fxFlex floatLabel="never" appearance="outline">
-    <input matInput placeholder="Search" autocomplete="off">
-    <button mat-icon-button matPrefix>
-      <mat-icon>search</mat-icon>
-    </button>
-    <button mat-icon-button matSuffix>
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-</div>
-
-
-
--->
